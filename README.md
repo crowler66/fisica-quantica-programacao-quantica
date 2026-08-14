@@ -388,7 +388,4 @@ Não é uma teoria física estabelecida e não deve ser apresentada como resulta
 - [IBM Quantum Documentation — Qiskit Runtime](https://quantum.cloud.ibm.com/docs/en/guides/compute-services)
 - [IBM Quantum Documentation — Statevector](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.quantum_info.Statevector)
 
-## Licença
 
- 
-   "+projeto livre, voltado a linha de pesquisa, pode ser revisado e modificado."
