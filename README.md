@@ -1,293 +1,463 @@
 # Laboratório de Física Quântica e Programação Quântica
 
-> **Projeto exploratório sobre fase, qubit, geometria, interferência, ondas e informação.**
+> **Este é um  laboratório computacional para investigar matematicamente a relação entre estados quânticos, números complexos, fase, geometria, interferência, ondas e informação.**
 
-Este repositório apresenta um laboratório numérico desenvolvido em Python para investigar, de forma computacional e visual, relações entre:
+## 1. Apresentação do projeto
 
-**estado quântico → amplitude complexa → fase → transformação → interferência → medição**
+Este projeto propõe a construção de um laboratório numérico em Python para estudar conceitos fundamentais da física quântica e da programação quântica.
 
-O projeto parte de objetos fundamentais da informação quântica, como qubits, matrizes unitárias, portas `H`, `X`, `Z`, operadores de fase e esfera de Bloch, e compara essas estruturas com uma representação matemática de ondas complexas e uma onda eletromagnética simplificada.
+A investigação parte de uma sequência de conceitos:
 
-## ⚠️ Natureza científica do projeto
+**Estado quântico → Amplitude → Número complexo → Fase → Transformação → Interferência → Medição.**
 
-Este trabalho é **exploratório e hipotético**. Ele não apresenta como fato estabelecido que:
+O laboratório utiliza matemática tradicional, álgebra, trigonometria, números complexos, matrizes e programação para representar e investigar esses fenômenos.
 
-- fase quântica seja uma dimensão espacial;
-- espaço físico seja diretamente equivalente ao espaço de fase de um qubit;
-- a função de onda quântica seja literalmente uma onda eletromagnética;
-- a teoria proposta constitua uma teoria física completa.
+São utilizados dois ambientes computacionais complementares:
 
-O programa foi construído para estudar estruturas matemáticas e gerar experimentos numéricos que possam ajudar a formular hipóteses testáveis.
+- **Debian Linux:** sistema operacional utilizado como ambiente de desenvolvimento, execução e experimentação.
+- **IBM Qiskit:** ferramenta de programação quântica utilizada para construir circuitos, representar estados e executar simulações.
 
-O próprio laboratório deixa explícito que **“fase quântica = dimensão espacial” não é assumido como resultado**. A hipótese deve ser avaliada por previsões observáveis e por comparação com a física conhecida.
+O objetivo é criar uma base experimental computacional que permita estudar as relações entre informação, fase, geometria e descrição física.
 
-## Objetivos
+## 2. Fundamentos matemáticos: começando pela álgebra tradicional
 
-1. Estudar amplitudes complexas em sistemas quânticos.
-2. Visualizar a fase como geometria no plano complexo.
-3. Relacionar fase e posição em uma onda complexa.
-4. Visualizar estados de um qubit na esfera de Bloch.
-5. Estudar interferência através do circuito `H → Uφ → H`.
-6. Observar como uma fase interna pode aparecer nas probabilidades de medição.
-7. Comparar, com as devidas limitações, estruturas de fase quântica e ondas eletromagnéticas.
-8. Criar uma base computacional para uma investigação mais ampla sobre informação, espaço, fase e transformação.
+Para compreender o comportamento de um qubit, precisamos primeiro compreender como funciona uma combinação de amplitudes.
 
-## Estrutura matemática central
+Um qubit possui dois estados fundamentais, representados por:
 
-Um qubit puro pode ser escrito como:
+- Estado zero: |0⟩
+- Estado um: |1⟩
 
-\[
-|\psi\rangle = a|0\rangle+b|1\rangle
-\]
+Um estado quântico pode ser representado por:
 
-com a condição de normalização:
+|ψ⟩ = a|0⟩ + b|1⟩
 
-\[
-|a|^2+|b|^2=1
-\]
+Onde a e b são amplitudes matemáticas.
 
-O operador de fase utilizado no laboratório é:
+Essas amplitudes podem conter números reais e imaginários.
 
-\[
-U_\phi=
-\begin{pmatrix}
-1&0\\
-0&e^{i\phi}
-\end{pmatrix}
-\]
+Para que o estado esteja normalizado, precisamos satisfazer:
 
-e:
+a² + b² = 1
 
-\[
-e^{i\phi}=\cos\phi+i\sin\phi
-\]
+Essa expressão é a forma simplificada para amplitudes reais. No caso geral, com amplitudes complexas, utilizamos:
 
-Para o circuito:
+|a|² + |b|² = 1
 
-\[
-|0\rangle \xrightarrow{H} H|0\rangle
-\xrightarrow{U_\phi} U_\phi H|0\rangle
-\xrightarrow{H} HU_\phi H|0\rangle
-\]
+A probabilidade de encontrar o estado zero é o módulo de a elevado ao quadrado.
 
-a amplitude final pode ser escrita como:
+P(0) = |a|²
 
-\[
-HU_\phi H|0\rangle
-=
-\frac{1+e^{i\phi}}{2}|0\rangle+
-\frac{1-e^{i\phi}}{2}|1\rangle
-\]
+A probabilidade de encontrar o estado um é:
 
-ou, separando uma fase global:
+P(1) = |b|²
 
-\[
-HU_\phi H|0\rangle
-=
-e^{i\phi/2}
-\left[
-\cos\left(\frac{\phi}{2}\right)|0\rangle
--i\sin\left(\frac{\phi}{2}\right)|1\rangle
-\right]
-\]
+Portanto:
 
-Logo:
+P(0) + P(1) = 1
 
-\[
-P(0)=\cos^2\left(\frac{\phi}{2}\right)
-\]
+Essa é a condição de normalização das probabilidades.
 
-\[
-P(1)=\sin^2\left(\frac{\phi}{2}\right)
-\]
+## 3. Números complexos e fase
 
-Esse resultado é um dos pontos centrais do laboratório: **uma fase que não aparece diretamente como probabilidade após a primeira transformação pode tornar-se observável após interferência.**
+Um número complexo possui duas partes:
 
-## Esfera de Bloch
+z = x + yi
 
-Para:
+Onde:
 
-\[
-|\psi\rangle=a|0\rangle+b|1\rangle
-\]
+- x é a parte real.
+- y é a parte imaginária.
+- i é a unidade imaginária, definida por i² = -1.
 
-o programa calcula:
+Podemos representar um número complexo utilizando trigonometria:
 
-\[
-x=2\operatorname{Re}(a^*b)
-\]
+z = r(cos φ + i sen φ)
 
-\[
-y=2\operatorname{Im}(a^*b)
-\]
+Onde r representa o módulo e φ representa o argumento, ou fase, do número complexo.
 
-\[
-z=|a|^2-|b|^2
-\]
+Pela identidade de Euler:
 
-A parametrização usada é:
+e^(iφ) = cos φ + i sen φ
 
-\[
-|\psi\rangle=
-\cos\left(\frac{\theta}{2}\right)|0\rangle+
-e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle
-\]
+Assim:
 
-Assim, a fase relativa aparece como uma coordenada angular do estado na representação de Bloch.
+z = r e^(iφ)
 
-## Relação com ondas
+Essa representação é importante porque permite interpretar a multiplicação por um número complexo de módulo 1 como uma rotação no plano complexo.
 
-O laboratório também utiliza a forma:
+Por exemplo, para φ = 90 graus:
 
-\[
-\psi(x,t)=e^{i(kx-\omega t)}
-\]
+e^(i90°) = cos 90° + i sen 90°
 
-com:
+e^(i90°) = 0 + i
 
-\[
-\varphi(x,t)=kx-\omega t
-\]
+e^(i90°) = i
 
-e:
+O resultado corresponde a uma rotação de 90 graus no plano complexo.
 
-\[
-\nabla\varphi=k
-\]
+## 4. Operador de fase
 
-Isso permite visualizar a fase como uma variável que muda ao longo de uma coordenada espacial em um modelo de onda.
+O operador utilizado no laboratório é:
 
-### Onda eletromagnética
+U(φ) = [ 1       0 ]
+       [ 0    e^(iφ) ]
 
-O código usa uma representação didática e normalizada:
+Ele atua sobre o estado:
 
-\[
-E_y=E_0\cos(kx-\omega t)
-\]
+|ψ⟩ = a|0⟩ + b|1⟩
 
-\[
-B_z=\frac{E_0}{c}\cos(kx-\omega t)
-\]
+Aplicando a transformação:
 
-e, para visualização:
+U(φ)|ψ⟩ = a|0⟩ + be^(iφ)|1⟩
 
-\[
-S_x\sim E_yB_z
-\]
+Isso significa que a primeira amplitude permanece inalterada, enquanto a segunda recebe uma transformação de fase.
 
-No programa, são usadas unidades normalizadas (`E0 = 1` e `c = 1`). Portanto, esse gráfico **não deve ser interpretado como uma simulação eletromagnética completa em unidades SI**.
+Substituindo a identidade de Euler:
 
-## Laboratório e isolamento
+be^(iφ) = b(cos φ + i sen φ)
 
-Recomenda-se executar o projeto em um **ambiente de laboratório isolado**.
+Podemos escrever:
 
-Isso pode ser feito em:
+U(φ)|ψ⟩ = a|0⟩ + b(cos φ + i sen φ)|1⟩
 
-- Linux;
-- Windows;
-- uma máquina virtual;
-- um ambiente virtual Python (`venv`).
+O módulo das amplitudes permanece igual.
 
-O `venv` isola as dependências Python do projeto. Para um isolamento mais forte, especialmente durante experimentos com software adicional, uma máquina virtual ou outro ambiente dedicado pode ser utilizada.
+Consequentemente, as probabilidades de medição na base computacional não mudam apenas pela aplicação desse operador.
 
-> **Importante:** `venv` não é um mecanismo de isolamento de rede nem uma barreira de segurança completa. Ele apenas separa o ambiente Python e seus pacotes.
+Entretanto, a fase relativa pode produzir diferenças observáveis quando o estado passa por outra transformação.
 
-## Linux
+## 5. Experimento matemático: interferência com portas Hadamard
+
+O laboratório utiliza o circuito:
+
+H → U(φ) → H
+
+A porta Hadamard é representada por:
+
+H = 1/√2 [ 1   1 ]
+          [ 1  -1 ]
+
+Considerando o estado inicial:
+
+|ψ⟩ = |0⟩
+
+Aplicando a primeira porta Hadamard:
+
+H|0⟩ = (|0⟩ + |1⟩)/√2
+
+O estado agora possui duas amplitudes iguais.
+
+Aplicando o operador de fase:
+
+U(φ)H|0⟩ = (|0⟩ + e^(iφ)|1⟩)/√2
+
+Aplicando a segunda porta Hadamard:
+
+HU(φ)H|0⟩ = [(1 + e^(iφ))/2]|0⟩ + [(1 - e^(iφ))/2]|1⟩
+
+Agora vamos desenvolver essa expressão utilizando álgebra e trigonometria.
+
+Sabemos que:
+
+e^(iφ) = cos φ + i sen φ
+
+Portanto:
+
+1 + e^(iφ) = 1 + cos φ + i sen φ
+
+E:
+
+1 - e^(iφ) = 1 - cos φ - i sen φ
+
+As amplitudes finais são:
+
+A(0) = (1 + cos φ + i sen φ)/2
+
+A(1) = (1 - cos φ - i sen φ)/2
+
+Para calcular as probabilidades, utilizamos o módulo ao quadrado de cada amplitude.
+
+Para o estado zero:
+
+P(0) = |A(0)|²
+
+P(0) = [(1 + cos φ)² + sen² φ]/4
+
+Desenvolvendo o quadrado:
+
+P(0) = [1 + 2 cos φ + cos² φ + sen² φ]/4
+
+Como:
+
+cos² φ + sen² φ = 1
+
+Obtemos:
+
+P(0) = (2 + 2 cos φ)/4
+
+Simplificando:
+
+**P(0) = (1 + cos φ)/2**
+
+Utilizando a identidade trigonométrica:
+
+cos²(φ/2) = (1 + cos φ)/2
+
+Chegamos a:
+
+**P(0) = cos²(φ/2)**
+
+Agora, para o estado um:
+
+P(1) = |A(1)|²
+
+P(1) = [(1 - cos φ)² + sen² φ]/4
+
+Desenvolvendo:
+
+P(1) = [1 - 2 cos φ + cos² φ + sen² φ]/4
+
+Aplicando a identidade trigonométrica:
+
+P(1) = (2 - 2 cos φ)/4
+
+Simplificando:
+
+**P(1) = (1 - cos φ)/2**
+
+Portanto:
+
+**P(1) = sen²(φ/2)**
+
+Esses resultados demonstram matematicamente como uma fase relativa pode ser convertida em diferenças nas probabilidades de medição por meio da interferência.
+
+## 6. Esfera de Bloch: geometria do qubit
+
+A esfera de Bloch é uma representação geométrica do estado puro de um qubit.
+
+Considerando:
+
+|ψ⟩ = a|0⟩ + b|1⟩
+
+Podemos representar o estado utilizando três coordenadas:
+
+x = 2 Re(a* b)
+
+y = 2 Im(a* b)
+
+z = |a|² - |b|²
+
+Uma parametrização tradicional utiliza dois ângulos:
+
+a = cos(θ/2)
+
+b = e^(iφ) sen(θ/2)
+
+Portanto:
+
+x = sen θ cos φ
+
+y = sen θ sen φ
+
+z = cos θ
+
+Essas coordenadas obedecem à equação da esfera:
+
+x² + y² + z² = 1
+
+A fase relativa φ determina a posição angular em torno do eixo vertical.
+
+O ângulo θ determina a posição em relação aos polos.
+
+Essa representação é matemática e não significa que o qubit seja literalmente uma esfera física.
+
+## 7. Relação matemática entre fase e ondas
+
+O laboratório também utiliza uma representação de onda complexa:
+
+ψ(x,t) = e^(i(kx - ωt))
+
+Pela identidade de Euler:
+
+ψ(x,t) = cos(kx - ωt) + i sen(kx - ωt)
+
+A fase pode ser escrita como:
+
+φ(x,t) = kx - ωt
+
+Para observar como a fase muda em relação à posição, calculamos:
+
+dφ/dx = k
+
+Isso significa que a fase varia proporcionalmente à coordenada espacial no modelo de onda plana.
+
+Para três dimensões:
+
+φ(r,t) = k · r - ωt
+
+E:
+
+∇φ = k
+
+O laboratório utiliza essas expressões para comparar matematicamente a fase de uma onda com a fase relativa presente nos estados quânticos.
+
+Essa comparação é investigativa. Não estabelece que os dois conceitos sejam fisicamente idênticos.
+
+## 8. Modelo de onda eletromagnética
+
+Para complementar os experimentos, o programa utiliza uma representação simplificada de uma onda eletromagnética plana.
+
+O campo elétrico é:
+
+E(x,t) = E₀ cos(kx - ωt)
+
+O campo magnético é:
+
+B(x,t) = (E₀/c) cos(kx - ωt)
+
+Onde:
+
+- E₀ representa a amplitude do campo elétrico.
+- c representa a velocidade da luz no vácuo.
+- k representa o número de onda.
+- ω representa a frequência angular.
+- x representa a posição.
+- t representa o tempo.
+
+Para estudar o fluxo de energia, utilizamos a relação:
+
+S = (1/μ₀) E × B
+
+Essa expressão representa o vetor de Poynting na descrição eletromagnética clássica.
+
+Para uma onda que se propaga na direção x:
+
+Sx = Ey Bz / μ₀
+
+No programa são utilizadas unidades normalizadas, com E₀ = 1 e c = 1.
+
+Por isso, o gráfico é uma representação didática e não uma simulação completa em unidades do Sistema Internacional.
+
+## 9. Debian Linux: ambiente de laboratório
+
+O projeto utiliza o Debian Linux como ambiente de desenvolvimento e experimentação.
+
+O Debian é uma distribuição GNU/Linux que oferece ferramentas para programação, administração de sistemas, desenvolvimento científico e execução de aplicações.
+
+Neste laboratório, o Debian funciona como a infraestrutura computacional responsável por:
+
+- Executar os programas Python.
+- Gerenciar as bibliotecas matemáticas.
+- Organizar os experimentos.
+- Criar ambientes virtuais.
+- Executar simulações.
+- Gerar gráficos científicos.
+- Integrar ferramentas de programação quântica.
+
+A utilização do terminal permite acompanhar diretamente a execução dos programas e compreender o funcionamento do ambiente de desenvolvimento.
+
+### Preparação do Debian
+
+Instalar os componentes básicos:
+
+```bash
+sudo apt update
+
+sudo apt install python3 python3-pip python3-venv git
+```
+
+Criar o diretório:
 
 ```bash
 mkdir laboratorio-fisica-quantica
+
 cd laboratorio-fisica-quantica
-
-python3 -m venv .venv
-source .venv/bin/activate
-
-python -m pip install --upgrade pip
-pip install -r requirements.txt
 ```
 
-Verifique:
+Criar o ambiente virtual:
+
+```bash
+python3 -m venv .venv
+```
+
+Ativar:
+
+```bash
+source .venv/bin/activate
+```
+
+Atualizar o pip:
+
+```bash
+python -m pip install --upgrade pip
+```
+
+Instalar as bibliotecas:
+
+```bash
+pip install numpy matplotlib
+```
+
+Verificar o ambiente:
 
 ```bash
 python --version
-pip --version
+
+pip list
 ```
 
-Execute o laboratório:
+O ambiente virtual permite manter as bibliotecas do laboratório separadas dos pacotes Python instalados globalmente no Debian.
 
-```bash
-python laboratorio_fase_espaco.py
-```
+É importante esclarecer que o `venv` não isola a rede nem substitui uma máquina virtual ou um mecanismo de segurança do sistema operacional.
 
-Para sair do ambiente virtual:
+## 10. IBM Qiskit: laboratório de programação quântica
 
-```bash
-deactivate
-```
+O Qiskit é um conjunto de ferramentas de software de código aberto desenvolvido para trabalhar com computação quântica.
 
-## Windows PowerShell
+Seu principal componente é o Qiskit SDK, que permite construir circuitos, manipular operadores, representar estados e executar programas quânticos.
 
-```powershell
-mkdir laboratorio-fisica-quantica
-cd laboratorio-fisica-quantica
+Neste projeto, o Qiskit funciona como uma segunda camada experimental.
 
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
+Enquanto o Python com NumPy e Matplotlib permite desenvolver os cálculos matemáticos e visualizar os resultados, o Qiskit permite representar os mesmos experimentos por meio da linguagem de circuitos quânticos.
 
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
+O laboratório pode trabalhar em três níveis:
 
-Execute:
+**1. Desenvolvimento matemático**
 
-```powershell
-python laboratorio_fase_espaco.py
-```
+Construção das equações e cálculo das amplitudes e probabilidades.
 
-Para sair:
+**2. Simulação computacional**
 
-```powershell
-deactivate
-```
+Representação dos estados e circuitos utilizando o Qiskit localmente.
 
-Se a política do PowerShell bloquear a ativação do ambiente, consulte a documentação do Python/Windows e ajuste a política somente no escopo apropriado ao seu laboratório.
+**3. Hardware quântico**
 
-## Dependências do laboratório
+Quando houver acesso aos serviços IBM Quantum, envio dos circuitos para execução em processadores quânticos reais.
 
-O código principal fornecido neste projeto usa diretamente:
+É importante distinguir uma simulação clássica de uma execução em hardware quântico. O simples uso do Qiskit não significa que o programa esteja sendo executado em um computador quântico físico.
 
-```text
-numpy
-matplotlib
-```
+### Instalação no Debian
 
-O Qiskit é tratado como uma camada adicional para reproduzir os experimentos utilizando a linguagem de circuitos quânticos. Ele está separado em `requirements-qiskit.txt` para que o laboratório matemático básico permaneça leve.
-
-## IBM Qiskit
-
-[Qiskit](https://quantum.cloud.ibm.com/docs/en/guides/tools-intro) é um SDK open source para construção e manipulação de circuitos quânticos. A plataforma IBM Quantum complementa o SDK oferecendo serviços de execução quântica, incluindo o Qiskit Runtime para workloads em hardware quântico IBM. 
-
-Instalação básica:
+Com o ambiente virtual ativado:
 
 ```bash
 pip install qiskit
 ```
 
-Para instalar a camada Qiskit do projeto:
+Para acessar os serviços de computação quântica IBM, também pode ser instalado:
 
 ```bash
-pip install -r requirements-qiskit.txt
-```
-
-Ou, separadamente:
-
-```bash
-pip install qiskit
 pip install qiskit-ibm-runtime
 ```
 
-A documentação oficial recomenda o uso de ambientes virtuais para os projetos e orienta a instalação do SDK separadamente do cliente do Runtime.
+Para utilizar visualizações adicionais:
 
-### Exemplo mínimo com Qiskit
+```bash
+pip install "qiskit[visualization]"
+```
+
+### Exemplo: circuito quântico de interferência
 
 ```python
 from qiskit import QuantumCircuit
@@ -305,87 +475,109 @@ qc.h(0)
 print(qc)
 
 state = Statevector.from_instruction(qc)
+
 print(state)
 print(state.probabilities())
 ```
 
-O exemplo reproduz a ideia central do laboratório: preparar uma superposição, aplicar uma transformação de fase e utilizar uma segunda transformação para converter a informação de fase em diferença observável nas amplitudes/probabilidades.
+O circuito realiza três operações:
 
-## Experimentos
+1. Aplica a porta Hadamard.
+2. Aplica uma rotação em torno do eixo Z.
+3. Aplica novamente a porta Hadamard.
 
-O programa disponibiliza seis visualizações:
+A porta RZ(φ) está relacionada ao operador de fase U(φ) utilizado no laboratório:
 
-1. **Rotação de fase no plano complexo**
-2. **Fase em função da posição**
-3. **Esfera de Bloch**
-4. **Circuito `H → Uφ → H`**
-5. **Onda eletromagnética normalizada**
-6. **Varredura da fase e interferência**
+U(φ) = e^(iφ/2) RZ(φ)
 
+A diferença é apenas um fator de fase global, que não altera as probabilidades de medição desse experimento.
 
-## Hipótese de trabalho
+Para φ = 90 graus:
 
-A linha de investigação deste projeto pode ser resumida como:
+P(0) = cos²(45°) = 0,5
 
-\[
-\text{informação}
-\rightarrow
-\text{estado}
-\rightarrow
-\text{fase}
-\rightarrow
-\text{transformação}
-\rightarrow
-\text{interferência}
-\rightarrow
-\text{observação}
-\]
+P(1) = sen²(45°) = 0,5
 
-A hipótese mais ampla é investigar se estruturas matemáticas associadas à fase e à transformação de estados podem fornecer uma linguagem útil para discutir relações entre informação quântica, geometria e descrição física.
+Portanto, o resultado esperado para as probabilidades é:
 
-**Essa hipótese permanece aberta e precisa de desenvolvimento matemático, comparação com teorias existentes e, principalmente, previsões experimentais falsificáveis.**
+Estado zero: 50%
 
-## Limitações
+Estado um: 50%
 
-O laboratório atual é:
+## 11. Experimentos disponíveis
 
-- numérico;
-- didático;
-- baseado em modelos simplificados;
-- sem ruído quântico experimental;
-- sem calibração de hardware;
-- sem pretensão de substituir uma derivação física completa.
+O laboratório apresenta seis visualizações principais:
 
-A parte eletromagnética é uma visualização normalizada. A esfera de Bloch é uma representação matemática do estado de um qubit. A analogia entre essas estruturas deve ser tratada como ferramenta de investigação, não como identidade física.
+1. Rotação de fase no plano complexo.
+2. Fase em função da posição.
+3. Representação geométrica na esfera de Bloch.
+4. Circuito de interferência H → U(φ) → H.
+5. Modelo simplificado de onda eletromagnética.
+6. Varredura da fase e análise das probabilidades de interferência.
 
-## Possíveis contribuições
+Esses experimentos permitem estudar diferentes aspectos das transformações matemáticas aplicadas aos estados quânticos.
 
-Este repositório está aberto a contribuições que possam:
+## 12. Hipótese de investigação
 
-- reproduzir os resultados;
-- verificar as deduções matemáticas;
-- encontrar limitações ou contraexemplos;
-- melhorar os experimentos numéricos;
-- adicionar circuitos Qiskit;
-- comparar simuladores clássicos e hardware quântico;
-- introduzir ruído e decoerência;
-- relacionar o modelo com literatura acadêmica;
-- propor previsões quantitativas e testes falsificáveis;
-- melhorar as visualizações e documentação.
+A linha de investigação deste projeto pode ser representada pela sequência:
 
-Uma contribuição especialmente importante seria transformar hipóteses qualitativas em **predições quantitativas que possam ser comparadas com dados experimentais**.
+Informação → Estado → Fase → Transformação → Interferência → Observação.
 
-## Status
+A hipótese mais ampla é investigar se estruturas matemáticas relacionadas à fase, à transformação de estados e à geometria podem fornecer uma linguagem útil para estudar possíveis relações entre informação quântica e descrição física do espaço.
 
-**Pesquisa exploratória / laboratório educacional / hipótese em desenvolvimento.**
+A hipótese de que a fase possa possuir alguma relação mais profunda com a geometria espacial não é considerada comprovada.
 
-Não é uma teoria física estabelecida e não deve ser apresentada como resultado experimental confirmado.
+Para avançar nessa investigação, será necessário:
 
-## Referências técnicas
+- Desenvolver formalmente as relações matemáticas.
+- Comparar os resultados com a mecânica quântica estabelecida.
+- Identificar possíveis previsões quantitativas.
+- Formular experimentos capazes de testar as previsões.
+- Identificar resultados que possam refutar a hipótese.
 
-- [IBM Quantum Documentation — Qiskit](https://quantum.cloud.ibm.com/docs/en/guides/tools-intro)
-- [IBM Quantum Documentation — Instalação do Qiskit](https://quantum.cloud.ibm.com/docs/en/guides/install-qiskit)
-- [IBM Quantum Documentation — Qiskit Runtime](https://quantum.cloud.ibm.com/docs/en/guides/compute-services)
-- [IBM Quantum Documentation — Statevector](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.quantum_info.Statevector)
+## 13. Limitações científicas
 
+O projeto possui caráter exploratório e educacional.
 
+Suas principais limitações são:
+
+- Utilização de simulações numéricas.
+- Ausência de experimentos quânticos próprios.
+- Ausência de calibração de hardware.
+- Ausência de modelagem completa de ruído e decoerência.
+- Utilização de uma representação eletromagnética simplificada.
+- Ausência de demonstração experimental de uma nova relação física entre fase e espaço.
+
+Os resultados obtidos por simulação demonstram o comportamento dos modelos matemáticos implementados, mas não comprovam hipóteses físicas além desses modelos.
+
+## 14. Possíveis desenvolvimentos
+
+O projeto poderá evoluir por meio de:
+
+- Novos circuitos quânticos.
+- Simulações com múltiplos qubits.
+- Estudos de emaranhamento.
+- Introdução de ruído e decoerência.
+- Comparação entre simulações clássicas e hardware quântico.
+- Estudos matemáticos de operadores unitários.
+- Desenvolvimento de novos modelos de ondas.
+- Comparação com literatura científica.
+- Formulação de previsões experimentais.
+
+## 15. Status do projeto
+
+**Laboratório computacional de física quântica e programação quântica.**
+
+Pesquisa exploratória, matemática e educacional.
+
+O projeto não apresenta uma teoria física estabelecida nem resultados experimentais confirmados.
+
+Sua finalidade é desenvolver ferramentas computacionais e matemáticas para investigar relações entre informação, fase, geometria, ondas e transformações quânticas.
+
+## 16. Referências técnicas
+
+- Debian: https://www.debian.org/
+- IBM Quantum — Introdução ao Qiskit: https://quantum.cloud.ibm.com/docs/en/qiskit
+- IBM Quantum — Instalação do Qiskit: https://quantum.cloud.ibm.com/docs/en/qiskit/install-qiskit
+- IBM Quantum — Primeiros circuitos: https://quantum.cloud.ibm.com/docs/en/guides/quick-start
+- IBM Quantum — Cliente de computação quântica: https://quantum.cloud.ibm.com/docs/en/ibm-quantum-compute/install-qiskit-runtime
