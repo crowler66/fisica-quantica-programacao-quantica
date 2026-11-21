@@ -1,10 +1,10 @@
 # Laboratório de Física Quântica e Programação Quântica
 
-> **Este é um  laboratório computacional para investigar matematicamente a relação entre estados quânticos, números complexos, fase, geometria, interferência, ondas e informação.**
+> **Este é um laboratório computacional para investigar matematicamente a relação entre estados quânticos, números complexos, fase, geometria, interferência, ondas e informação.**
 
 ## 1. Apresentação do projeto
 
-Este projeto propõe a construção de um laboratório numérico em Python para estudar conceitos fundamentais da física quântica e da programação quântica.
+O projeto propõe a construção de um laboratório numérico em Python para estudar conceitos fundamentais da física quântica e da programação quântica.
 
 A investigação parte de uma sequência de conceitos:
 
